@@ -1,13 +1,7 @@
-"use client"
-import { Button } from "@/shared/ui/button";
-export const Color = () => {
-  return (
-    <Button
-      onClick={() => {
-        console.log("111");
-      }}
-    >
-      тест
-    </Button>
-  );
+"use client";
+
+type Props = { color: string; className: string };
+
+export const Color = ({ color, className }: Props) => {
+  return <div style={{ backgroundColor: color }} className={className}></div>;
 };
