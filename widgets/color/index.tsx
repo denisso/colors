@@ -1,7 +1,12 @@
 "use client";
+import { Box } from "@/shared/ui/layout";
 
 type Props = { color: string; className: string };
 
 export const Color = ({ color, className }: Props) => {
-  return <div style={{ backgroundColor: color }} className={className}></div>;
+  return (
+    <Box>
+      <div style={{ backgroundColor: color }} className={className}></div>
+    </Box>
+  );
 };

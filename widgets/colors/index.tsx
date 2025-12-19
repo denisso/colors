@@ -1,7 +1,7 @@
 import React from "react";
 import { Color } from "@/widgets/color";
 import { parseToHsla } from "color2k";
-import { getShadeFromHSLA } from "@/shared/ui/lib/get-shade-from-hsla";
+import { getShadeFromHSLA } from "@/shared/lib/get-shade-from-hsla";
 
 // оттенки
 const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
@@ -22,9 +22,9 @@ export const Colors = ({ baseColor }: Props) => {
     setColors(shades.map((_, index) => getShadeFromHSLA(h, s, l, a, index)));
   }, [baseColor]);
   return (
-    <div className="flex">
+    <div className="flex gap-2">
       {colors.map((color, indx) => (
-        <Color color={color} key={shades[indx]} className={"h-8 w-8"} />
+        <Color color={color} key={shades[indx]} className={"h-24 w-20"} />
       ))}
     </div>
   );

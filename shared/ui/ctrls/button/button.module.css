@@ -1,0 +1,7 @@
+.button {
+  background: var(--color-ctrl-primary);
+}
+
+.button:hover {
+  background-color: oklch(from var(--color-ctrl-primary) calc(l * 1.3) c h);
+}
