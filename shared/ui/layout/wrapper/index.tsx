@@ -5,6 +5,7 @@ type Props = {
   children: ReactNode;
   className?: string;
   dir?: "column" | "row";
+  border?: boolean;
 };
 
 const dirClassMap: Record<NonNullable<Props["dir"]>, string> = {
@@ -12,9 +13,13 @@ const dirClassMap: Record<NonNullable<Props["dir"]>, string> = {
   column: "flex-col",
 };
 
-const Wrapper = ({ children, className, dir = "row" }: Props) => {
+const Wrapper = ({ children, className, border, dir = "row" }: Props) => {
   return (
-    <div className={cn("overflow-hidden flex", dirClassMap[dir], className)}>
+    <div
+      className={cn(className, "overflow-hidden flex gap-4", dirClassMap[dir], {
+        "border-solid border border-black": border,
+      })}
+    >
       {children}
     </div>
   );
@@ -22,7 +27,7 @@ const Wrapper = ({ children, className, dir = "row" }: Props) => {
 
 export const Box = ({ children, className, ...rest }: Props) => {
   return (
-    <Wrapper className={cn("rounded-sm", className)} {...rest}>
+    <Wrapper className={cn(className, "rounded-sm")} {...rest}>
       {children}
     </Wrapper>
   );
@@ -30,7 +35,7 @@ export const Box = ({ children, className, ...rest }: Props) => {
 
 export const Container = ({ children, className, ...rest }: Props) => {
   return (
-    <Wrapper className={cn("rounded-lg", className)} {...rest}>
+    <Wrapper className={cn(className, "rounded-lg")} {...rest}>
       {children}
     </Wrapper>
   );

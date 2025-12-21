@@ -1,30 +1,17 @@
 "use client";
 import React from "react";
 import { Colors } from "../colors";
+import { InputColor } from "../input-color";
+import { Container } from "@/shared/ui/layout";
 
 export const ColorPicker = () => {
   const [color, setColor] = React.useState<string>("#000000");
   return (
-    <div className="flex flex-col items-center gap-2">
+    <Container className="items-center" dir="column">
       <Colors baseColor={color} />
-      <div className="flex items-center">
-        <input
-          type="color"
-          onChange={(event) => {
-            setColor(event.target.value);
-          }}
-          value={color}
-        />
-        <input
-          type="text"
-          id="hexInput"
-          onChange={(event) => {
-            setColor(event.target.value);
-          }}
-          value={color}
-          placeholder="#000000"
-        />
-      </div>
-    </div>
+      <Container>
+        <InputColor cb={setColor} />
+      </Container>
+    </Container>
   );
 };
