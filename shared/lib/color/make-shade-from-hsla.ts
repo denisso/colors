@@ -1,7 +1,9 @@
 import { clamp } from "./clamp";
 import guard from "./guard";
 import type { HSL } from "@/shared/types";
-
+/**
+ * gpt generated
+ */
 export function makeShadeFromHSLA(hsl: HSL, index: number, result?: HSL) {
   const t = (index - 5) / 5;
 
@@ -12,8 +14,8 @@ export function makeShadeFromHSLA(hsl: HSL, index: number, result?: HSL) {
 
   let l =
     hsl.l +
-    (t < 0 ? (1 - hsl.l) * Math.pow(-t, 1.4) : -hsl.l * Math.pow(t, 1.15));
-  l = guard(0, 100, clamp(s, 0, 1) * 100);
+    (t < 0 ? (0.8 - hsl.l) * Math.pow(-t, 1.4) : -hsl.l * Math.pow(t, 1.15));
+  l = guard(0, 100, clamp(l, 0, 1) * 100);
 
   if (result) {
     result.h = hsl.h;

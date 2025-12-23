@@ -5,11 +5,13 @@ const componentToHex = (c: number) => {
 };
 
 export function convertRGBToHEX(color: RGB, result?: HEX): HEX {
+
   const hex =
     "#" +
     componentToHex(color.r) +
     componentToHex(color.g) +
     componentToHex(color.b);
+
   if (result) {
     result.hex = hex;
     return result;

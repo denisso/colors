@@ -11,6 +11,7 @@ const roundColor = (color: number): number => {
  * @returns
  */
 export const convertHSLToRGB = (hsl: HSL, result?: RGB): RGB => {
+  
   const l = hsl.l / 100;
   if (hsl.s === 0) {
     // achromatic
@@ -57,6 +58,7 @@ export const convertHSLToRGB = (hsl: HSL, result?: RGB): RGB => {
   const r = roundColor(red + lightnessModification);
   const g = roundColor(green + lightnessModification);
   const b = roundColor(blue + lightnessModification);
+
   if (result) {
     result.r = r;
     result.g = g;

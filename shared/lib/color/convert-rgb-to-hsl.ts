@@ -1,8 +1,11 @@
 import type { RGB, HSL } from "@/shared/types";
 
 export function convertRGBToHSL(rgb: RGB, result?: HSL): HSL {
-  const max = Math.max(rgb.r, rgb.g, rgb.b);
-  const min = Math.min(rgb.r, rgb.g, rgb.b);
+  const r0 = rgb.r / 255
+  const g0 = rgb.g / 255
+  const b0 = rgb.b / 255
+  const max = Math.max(r0, g0, b0);
+  const min = Math.min(r0, g0, b0);
   const l = (max + min) / 2;
 
   // achromatic
@@ -22,10 +25,10 @@ export function convertRGBToHSL(rgb: RGB, result?: HSL): HSL {
   const h =
     60 *
     (rgb.r === max
-      ? (rgb.g - rgb.b) / delta + (rgb.g < rgb.b ? 6 : 0)
-      : rgb.g === max
-      ? (rgb.b - rgb.r) / delta + 2
-      : (rgb.r - rgb.g) / delta + 4);
+      ? (g0 - b0) / delta + (g0 < b0 ? 6 : 0)
+      : g0 === max
+      ? (b0 - r0) / delta + 2
+      : (r0 - g0) / delta + 4);
 
   if (result) {
     result.h = h;
