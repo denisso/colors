@@ -1,10 +1,4 @@
-export type ColorShared = HSL & RGB & HEX;
-
-export type HSL = {
-  h: number;
-  s: number;
-  l: number;
-};
+export type ColorShared = RGB & HEX;
 
 export type RGB = {
   r: number;
@@ -12,6 +6,4 @@ export type RGB = {
   b: number;
 };
 
-export type HEX = {
-  hex: string
-}
+export type HEX = { hex: string };

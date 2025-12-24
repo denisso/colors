@@ -8,7 +8,7 @@ export const Color = ({ color, className }: Props) => {
   return (
     <Box>
       <div style={{ backgroundColor: color.hex }} className={className}>
-        {color.hex}
+        <span className="text-white mix-blend-difference">{color.hex}</span>
       </div>
     </Box>
   );

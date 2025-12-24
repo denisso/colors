@@ -32,10 +32,10 @@ export function InputColor({ className, cbRef }: Props) {
   };
 
   return (
-    <Container>
+    <Container className="items-center">
       <div
         onClick={openPicker}
-        className={clsx(className, "h-4 w-4 rounded-ful cursor-pointer")}
+        className={clsx(className, "h-4 w-4 rounded-full cursor-pointer")}
         style={{ backgroundColor: color }}
       >
         <input ref={inputRef} type="color" className="block w-0 h-0" />
