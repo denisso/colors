@@ -9,7 +9,7 @@ export const ColorPicker = () => {
   // почти как контекст только без перерисовок
   const ref = React.useRef<(arg: string) => void>(null);
   return (
-    <Container className="items-center flex-col">
+    <Container className="items-center flex-col" border>
       <Colors cbRef={ref} />
       <Container>
         <InputColor cbRef={ref} />

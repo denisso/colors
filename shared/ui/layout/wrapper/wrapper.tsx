@@ -19,6 +19,11 @@ const Wrapper = ({ children, className, border }: Props) => {
   );
 };
 
+/**
+ * только rounded
+ * @param param0 
+ * @returns 
+ */
 export const Box = ({ children, className, ...rest }: Props) => {
   return (
     <Wrapper className={cn(className, "rounded-sm")} {...rest}>
@@ -29,7 +34,7 @@ export const Box = ({ children, className, ...rest }: Props) => {
 
 export const Container = ({ children, className, ...rest }: Props) => {
   return (
-    <Wrapper className={cn(className, "rounded-lg")} {...rest}>
+    <Wrapper className={cn(className, "rounded-lg p-2")} {...rest}>
       {children}
     </Wrapper>
   );

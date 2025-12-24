@@ -37,9 +37,9 @@ export const makeShadesFromRGB = (hex: string, n: number) => {
   const result: ColorShared[] = [];
   const step = 1 / n;
   for (let i = 1; i < n; i++) {
-    result.push(rgbLight(baseColor, 1 -step * i));
+    result.push(rgbLight(baseColor, 1 - step * i));
   }
-  result.push(baseColor)
+  result.push(baseColor);
   for (let i = 1; i < n; i++) {
     result.push(rgbDark(baseColor, step * i));
   }

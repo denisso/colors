@@ -1,11 +1,11 @@
 import { ColorPicker } from "@/widgets/color-picker";
-
+import { Container } from "@/shared/ui/layout";
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-cente">
-      <main className="flex min-h-screen w-full flex-col items-center justify-between">
+    <Container className="min-h-screen justify-center" >
+      <main className="flex w-full flex-col items-center justify-between max-w-7xl">
         <ColorPicker />
       </main>
-    </div>
+    </Container>
   );
 }
