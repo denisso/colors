@@ -1,14 +1,14 @@
-import type { ColorShared } from "@/shared/types";
+import type { ShadeColor } from "@/shared/types";
 import { convertRGBToHEX } from "./convert-rgb-to-hex";
 
 const mixChannel = (from: number, to: number, ratio: number) =>
   from + (to - from) * ratio;
 
 const makeRGBShade = (
-  color: ColorShared,
+  color: ShadeColor,
   diff: number,
   ratio: number
-): ColorShared => {
+): ShadeColor => {
   const r = Math.round(mixChannel(color.r, diff, ratio));
   const g = Math.round(mixChannel(color.g, diff, ratio));
   const b = Math.round(mixChannel(color.b, diff, ratio));
@@ -20,21 +20,21 @@ const makeRGBShade = (
   };
 };
 
-export const rgbDark = (color: ColorShared, ratio: number): ColorShared =>
+export const rgbDark = (color: ShadeColor, ratio: number): ShadeColor =>
   makeRGBShade(color, 0, ratio);
 
-export const rgbLight = (color: ColorShared, ratio: number): ColorShared =>
+export const rgbLight = (color: ShadeColor, ratio: number): ShadeColor =>
   makeRGBShade(color, 255, ratio);
 
-export const makeShadesFromRGB = (hex: string, n: number) => {
-  const baseColor: ColorShared = {
+export const makeShadesFromHEX = (hex: string, n: number) => {
+  const baseColor: ShadeColor = {
     r: parseInt(hex.slice(1, 3), 16),
     g: parseInt(hex.slice(3, 5), 16),
     b: parseInt(hex.slice(5, 7), 16),
     hex,
   };
 
-  const result: ColorShared[] = [];
+  const result: ShadeColor[] = [];
   const step = 1 / n;
   for (let i = 1; i < n; i++) {
     result.push(rgbLight(baseColor, 1 - step * i));

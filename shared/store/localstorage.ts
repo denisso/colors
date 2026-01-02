@@ -1,30 +1,39 @@
 import type { Store } from './store';
-
+import type { BaseColor } from '../types';
+import { convertHEXToRGB } from '../lib/color/convert-hex-to-rgb';
+// уникальный namespace для localStorage
 const nameLocalStorageData = '_storage_generator_colors_';
-/**
- * тип для данных в localStorage
- */
-export type LocalStorageData = Pick<Store, 'colors'>;
 
-type LocalStorageReader = {
-  [K in keyof LocalStorageData]: (arg: string) => LocalStorageData[K];
+// можно выбрать только некоторые свойства для сохранения в localStorage
+// Pick используется для того чтобы в написании не ошибиться
+type LocalStorageData = Partial<Record<keyof Pick<Store, 'colors'>, unknown>>;
+
+// чтение выбранных свойств  из localstorage
+export const localStorageReader = {
+  colors: (str: string): BaseColor[] => {
+    return str.split(',').map((hex) => {
+      return Object.assign({ id: Date.now(), hex }, convertHEXToRGB(hex));
+    });
+  },
+} satisfies LocalStorageData;
+
+// обертка для записи в localStorage
+const writeToStore = (name: string, value: string) => {
+  localStorage.setItem(name, value);
 };
 
-// парсыры для значений из localstorage
-export const localStorageReader: LocalStorageReader = {
-  colors: (str: string): string[] => str.split(','),
-};
+// запись выбранных свойств  из localstorage
+export const localStorageWriter = {
+  colors: (name: string, value: BaseColor[]) => {
+    writeToStore(name, value.map((itemColor) => itemColor.hex).join(','));
+  },
+} satisfies LocalStorageData;
 
-type LocalStorageWriters = {
-  [K in keyof LocalStorageData]: (arg: LocalStorageData[K]) => string;
-};
+//тип результата для readLocalStorage
+type ReadLocalStorageResult = Pick<Store, 'colors'>;
 
-export const localStorageWriter: LocalStorageWriters = {
-  colors: (arg: string[]) => arg.join(','),
-};
-
-export const readLocalStorage = (): LocalStorageData => {
-  const result: LocalStorageData = {
+export const readLocalStorage = (): ReadLocalStorageResult => {
+  const result: ReadLocalStorageResult = {
     colors: [],
   };
 
@@ -32,8 +41,8 @@ export const readLocalStorage = (): LocalStorageData => {
     try {
       const data = localStorage.getItem(nameLocalStorageData + key);
       if (typeof data == 'string') {
-        result[key as keyof LocalStorageData] =
-          localStorageReader[key as keyof LocalStorageData](data);
+        result[key as keyof ReadLocalStorageResult] =
+          localStorageReader[key as keyof ReadLocalStorageResult](data);
       }
     } catch {}
   }

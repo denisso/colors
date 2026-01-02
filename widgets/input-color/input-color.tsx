@@ -2,12 +2,14 @@
 import React from "react";
 import clsx from "clsx";
 import { Container } from "@/shared/ui/layout";
+import { useShadesContext } from '../shades/shades-context';
+
 type Props = {
   className?: string;
-  cbRef: React.RefObject<((value: string) => void) | null>;
 };
 
-export function InputColor({ className, cbRef }: Props) {
+export function InputColor({ className }: Props) {
+  const context = useShadesContext()
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [color, setColor] = React.useState<string>("#000000");
   React.useEffect(() => {
@@ -17,15 +19,13 @@ export function InputColor({ className, cbRef }: Props) {
     }
     const onInput = () => {
       setColor(currentInput.value);
-      if (cbRef.current) {
-        cbRef.current(currentInput.value);
-      }
+      context.set("hex", currentInput.value)
     };
     currentInput.addEventListener("input", onInput);
     return () => {
       currentInput.removeEventListener("input", onInput);
     };
-  }, [inputRef, setColor, cbRef]);
+  }, [inputRef, setColor, context]);
 
   const openPicker = () => {
     inputRef.current?.click();
