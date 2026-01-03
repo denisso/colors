@@ -1,11 +1,14 @@
+'use client';
 import React from 'react';
-import { createStore } from 'react-store-light';
+import { createStoreReact } from 'react-store-light';
 import type { BaseColor } from '@/shared/types';
-import { store } from '@/shared/store';
+import { useStore } from '@/shared/store';
 
-type IContext = ReturnType<typeof createStore<BaseColor>>;
+const reactStore = createStoreReact<BaseColor>();
 
-const Context = React.createContext<IContext | undefined>(undefined);
+export const { useStore: useStoreShade, useStoreKey: useStoreKeyShade } = reactStore;
+
+const { StoreProvider } = reactStore;
 
 type Props = {
   children: React.ReactNode;
@@ -13,19 +16,12 @@ type Props = {
 };
 
 export function ShadesContextProvider({ children, id }: Props) {
-  const context = React.useMemo(() => {
+  const store = useStore();
+  const color = React.useMemo(() => {
     const colors = store.get('colors');
     const color = colors.find((item) => item.id == id) as BaseColor;
-    return createStore<BaseColor>(color);
-  }, [id]);
+    return color;
+  }, [id, store]);
 
-  return <Context.Provider value={context}>{children}</Context.Provider>;
-}
-
-export function useShadesContext() {
-  const context = React.useContext(Context);
-  if (context === undefined) {
-    throw new Error('useShadesContext must be used within a ShadesContextProvider');
-  }
-  return context;
+  return <StoreProvider value={color}>{children}</StoreProvider>;
 }

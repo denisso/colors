@@ -1,21 +1,33 @@
-import { createStore } from 'react-store-light';
-import { isBrowser } from '../lib/helpers';
+'use client';
+import React from 'react';
+import { createStoreReact } from 'react-store-light';
 import type { BaseColor } from '../types';
-import { readLocalStorage, localStorageWriter } from './localstorage';
+import { localStorageReader, localStorageWriter } from './localstorage';
 
 export type Store = { colors: BaseColor[] };
 
-const storeInitData: Store = {
-  colors: [{ id: Date.now(), hex: '#000000' }],
+const storeReact = createStoreReact<Store>();
+
+export const { useStore, useStoreKey } = storeReact;
+
+const { StoreProvider } = storeReact;
+export const GlobalStoreProvider = ({ children }: { children: React.ReactNode }) => {
+  return <StoreProvider value={{ colors: [] }}>{children}</StoreProvider>;
 };
 
-const initStore = () => {
-  if (isBrowser()) {
-    const localStorageData = Object.assign(readLocalStorage(), storeInitData);
-    const store = createStore<Store>(localStorageData);
+export const StoreInit = () => {
+  const store = useStore();
+
+  React.useEffect(() => {
+    const colors = localStorageReader['colors']();
+    if (colors) {
+      store.set('colors', colors);
+    }
+
     store.addListener('colors', localStorageWriter['colors']);
-  }
-  return createStore<Store>(storeInitData);
+    return () => {
+      store.removeListener('colors', localStorageWriter['colors']);
+    };
+  }, [store]);
+  return null;
 };
-
-export const store = initStore();

@@ -1,5 +1,5 @@
 'use client';
-import { store } from '@/shared/store';
+import { useStoreKey } from '@/shared/store';
 import { Container } from '@/shared/ui/layout';
 import { Shades } from '../shades';
 /**
@@ -8,7 +8,7 @@ import { Shades } from '../shades';
  * @returns
  */
 export const Colors = () => {
-  const colors = store.useStore('colors');
+  const colors = useStoreKey('colors');
   return (
     <Container>
       {colors.map((color) => (

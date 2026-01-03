@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { ShadeColor } from '@/shared/types';
-import { ShadesContextProvider, useShadesContext } from './shades-context';
+import { ShadesContextProvider, useStoreShade } from './shades-context';
 import { Container } from '@/shared/ui/layout';
 import { makeShadesFromHEX } from '@/shared/lib/color';
 import { Shade } from '@/widgets/shade';
@@ -9,17 +9,17 @@ import { InputColor } from '@/widgets/input-color';
 
 const ShadesList = () => {
   const [shades, setShades] = React.useState<ShadeColor[]>([]);
-  const context = useShadesContext();
+  const store = useStoreShade();
   React.useEffect(() => {
     const handler = (_: string, value: string) => {
       const colors = makeShadesFromHEX(value, 10);
       setShades(colors);
     };
-    context.addListener('hex', handler);
+    store.addListener('hex', handler);
     return () => {
-      context.removeListener('hex', handler);
+      store.removeListener('hex', handler);
     };
-  }, [context]);
+  }, [store]);
   return (
     <Container>
       {shades.map((shade, index) => (
