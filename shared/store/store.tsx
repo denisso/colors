@@ -12,16 +12,23 @@ export const { useStore, useStoreKey } = storeReact;
 
 const { StoreProvider } = storeReact;
 export const GlobalStoreProvider = ({ children }: { children: React.ReactNode }) => {
-  return <StoreProvider value={{ colors: [] }}>{children}</StoreProvider>;
+  return (
+    <StoreProvider value={{ colors: [] }}>
+      <StoreInit />
+      {children}
+    </StoreProvider>
+  );
 };
 
-export const StoreInit = () => {
+const StoreInit = () => {
   const store = useStore();
 
   React.useEffect(() => {
     const colors = localStorageReader['colors']();
-    if (colors) {
+    if (colors.length) {
       store.set('colors', colors);
+    } else {
+      store.set('colors', [{ id: Date.now(), hex: '#000000' }]);
     }
 
     store.addListener('colors', localStorageWriter['colors']);

@@ -2,7 +2,8 @@
 
 import type { Store } from './store';
 import type { BaseColor } from '../types';
-import { convertHEXToRGB } from '../lib/color/convert-hex-to-rgb';
+import { isHexRgbColor } from '../lib/color';
+
 // уникальный namespace для localStorage
 const nameLocalStorageData = '_storage_generator_colors_';
 
@@ -13,18 +14,23 @@ type LocalStorageData = Partial<Record<keyof Pick<Store, 'colors'>, unknown>>;
 // обертка для записи в localStorage
 const readFormStore = (name: string) => {
   const str = localStorage.getItem(nameLocalStorageData + name);
-  if(!str){
-    return ""
+  if (!str) {
+    return '';
   }
-  return str
+  return str;
 };
 
 // чтение выбранных свойств  из localstorage
 export const localStorageReader = {
   colors: (): BaseColor[] => {
-    return readFormStore("colors").split(',').map((hex) => {
-      return Object.assign({ id: Date.now(), hex }, convertHEXToRGB(hex));
-    });
+    const colors = readFormStore('colors').split(',');
+    const result: BaseColor[] = [];
+    for (const hex of colors) {
+      if (isHexRgbColor(hex)) {
+        result.push({ id: Date.now(), hex });
+      }
+    }
+    return result;
   },
 } satisfies LocalStorageData;
 
@@ -39,4 +45,3 @@ export const localStorageWriter = {
     writeToStore(name, value.map((itemColor) => itemColor.hex).join(','));
   },
 } satisfies LocalStorageData;
-
