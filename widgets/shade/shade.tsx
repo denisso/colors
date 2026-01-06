@@ -1,6 +1,6 @@
 "use client";
 import { Box } from "@/shared/ui/layout";
-import type { ShadeColor } from "@/shared/types";
+import type { ShadeColor } from '@/entities/color';
 import clsx from "clsx";
 
 type Props = { shade: ShadeColor; className: string };

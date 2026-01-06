@@ -1,7 +1,7 @@
 /**
  * базовый цвет из которого генерируем оттенки
  */
-export type BaseColor = {
+export type Color = {
   // уникальный индентификатор
   id: number;
 } & HEX;

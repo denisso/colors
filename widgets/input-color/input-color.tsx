@@ -3,7 +3,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { Container } from '@/shared/ui/layout';
 import { useStoreShade } from '../shades/shades-context';
-import { useStore } from '@/shared/store';
+import { useStore } from '@/entities/color';
 
 type Props = {
   className?: string;

@@ -1,8 +1,8 @@
 'use client';
 
-import type { Store } from './store';
-import type { BaseColor } from '../types';
-import { isHexRgbColor } from '../lib/color';
+import type { Store } from './color-store';
+import type { Color } from './types/color-types';
+import { isHexRgbColor } from '../helpers';
 
 // уникальный namespace для localStorage
 const nameLocalStorageData = '_storage_generator_colors_';
@@ -22,12 +22,12 @@ const readFormStore = (name: string) => {
 
 // чтение выбранных свойств  из localstorage
 export const localStorageReader = {
-  colors: (): BaseColor[] => {
+  colors: (): Color[] => {
     const colors = readFormStore('colors').split(',');
-    const result: BaseColor[] = [];
+    const result: Color[] = [];
     for (const hex of colors) {
       if (isHexRgbColor(hex)) {
-        result.push({ id: Date.now(), hex });
+        result.push({ id: performance.now(), hex });
       }
     }
     return result;
@@ -41,7 +41,7 @@ const writeToStore = (name: string, value: string) => {
 
 // запись выбранных свойств  из localstorage
 export const localStorageWriter = {
-  colors: (name: string, value: BaseColor[]) => {
+  colors: (name: string, value: Color[]) => {
     writeToStore(name, value.map((itemColor) => itemColor.hex).join(','));
   },
 } satisfies LocalStorageData;

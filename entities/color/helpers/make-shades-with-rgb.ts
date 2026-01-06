@@ -1,4 +1,4 @@
-import type { ShadeColor } from "@/shared/types";
+import type { ShadeColor } from "../model/types/color-types";
 import { convertRGBToHEX } from "./convert-rgb-to-hex";
 
 const mixChannel = (from: number, to: number, ratio: number) =>

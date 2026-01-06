@@ -1,17 +1,20 @@
 'use client';
 import React from 'react';
 import { createStoreReact } from 'react-store-light';
-import type { BaseColor } from '../types';
+import type { Color } from './types/color-types';
 import { localStorageReader, localStorageWriter } from './localstorage';
 
-export type Store = { colors: BaseColor[] };
+export const id = { count: 0 };
+
+export type Store = { colors: Color[] };
 
 const storeReact = createStoreReact<Store>();
 
-export const { useStore, useStoreKey } = storeReact;
+export const { useStore, useStoreState } = storeReact;
 
 const { StoreProvider } = storeReact;
-export const GlobalStoreProvider = ({ children }: { children: React.ReactNode }) => {
+
+export const ColorsStoreProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <StoreProvider value={{ colors: [] }}>
       <StoreInit />
