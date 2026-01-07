@@ -4,7 +4,11 @@ import { createStoreReact } from 'react-store-light';
 import type { Color } from './types/color-types';
 import { localStorageReader, localStorageWriter } from './localstorage';
 
-export const id = { count: 0 };
+let id = 0;
+
+export const nextId = () => {
+  return id++;
+};
 
 export type Store = { colors: Color[] };
 

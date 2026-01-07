@@ -3,6 +3,7 @@
 import type { Store } from './color-store';
 import type { Color } from './types/color-types';
 import { isHexRgbColor } from '../helpers';
+import { nextId } from './color-store';
 
 // уникальный namespace для localStorage
 const nameLocalStorageData = '_storage_generator_colors_';
@@ -27,7 +28,7 @@ export const localStorageReader = {
     const result: Color[] = [];
     for (const hex of colors) {
       if (isHexRgbColor(hex)) {
-        result.push({ id: performance.now(), hex });
+        result.push({ id: nextId(), hex });
       }
     }
     return result;

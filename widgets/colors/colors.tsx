@@ -3,12 +3,13 @@ import { useStoreState, useStore }  from '@/entities/color';
 import { Container } from '@/shared/ui/layout';
 import { Shades } from '../shades';
 import { Button } from '@/shared/ui/controls';
+import { nextId } from '@/entities/color';
 
 const Controls = () => {
   const store = useStore();
   const handleClickadd = () => {
     const colors = store.get('colors');
-    store.set('colors', [...colors, { id: performance.now(), hex: '#000000' }]);
+    store.set('colors', [...colors, { id: nextId(), hex: '#000000' }]);
   };
   return <Container>{<Button onClick={handleClickadd}>Add</Button>}</Container>;
 };
@@ -18,8 +19,8 @@ const Palettes = () => {
   return (
     <>
       <Container className='flex-col'>
-        {colors.map((color, i) => (
-          <Shades key={i} colorId={color.id} />
+        {colors.map((color) => (
+          <Shades key={color.id} colorId={color.id} />
         ))}
       </Container>
     </>
